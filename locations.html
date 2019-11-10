@@ -1,0 +1,1299 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Open Charge Map - Browse Charging Locations</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" />
+    <meta name="author" content="openchargemap.org" />
+
+
+    <!--<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/sketchy/bootstrap.min.css" rel="stylesheet" integrity="sha384-N8DsABZCqc1XWbg/bAlIDk7AS/yNzT5fcKzg/TwfmTuUqZhGquVmpb5VvfmLcMzp" crossorigin="anonymous">-->
+    <!--<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/yeti/bootstrap.min.css" rel="stylesheet" integrity="sha384-w6tc0TXjTUnYHwVwGgnYyV12wbRoJQo9iMlC2KdkdmVvntGgzT9jvqNEF/uKaF4m" crossorigin="anonymous">-->
+    <!--<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/simplex/bootstrap.min.css" rel="stylesheet" integrity="sha384-1OYccka9EByiS23wvPFiYHBPRAgU91xYVFb8g8sen6vRiBI5Uko6+B87q8zPGUnA" crossorigin="anonymous">-->
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-hVpXlpdRmJ+uXGwD5W6HZMnR9ENcKVRn855pPbuI/mwPIEKAuKgTKgGksVGmlAvt" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link href="/site/css/site.css" rel="stylesheet" />
+
+    <!--fav and touch icons -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-startup-image" href="/app/images/splashscreen/AppSplashscreen320x460.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/app/images/icons/AppIcon_114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/app/images/icons/AppIcon_72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/app/images/icons/AppIcon_57x57.png" />
+    <link rel="icon" type="image/png" href="/app/images/icons/AppIcon_57x57.png" />
+    <link href="https://fonts.googleapis.com/css?family=Oswald:300|Oxygen:300" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+    <!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+    <script>
+        window.addEventListener("load", function () {
+            window.cookieconsent.initialise({
+                "palette": {
+                    "popup": {
+                        "background": "#efefef",
+                        "text": "#404040"
+                    },
+                    "button": {
+                        "background": "#8ec760",
+                        "text": "#ffffff"
+                    }
+                },
+                "theme": "classic",
+                "position": "bottom-right",
+                "content": {
+                    "href": "https://openchargemap.org/site/about/terms"
+                }
+            })
+        });
+    </script>
+
+    <!-- End Cookie Consent plugin -->
+
+    <script>
+        function mapLoaded() {
+            document.getElementById("map-loading").style.display = "none";
+        }
+    </script>
+</head>
+<body>
+
+   <nav class="navbar navbar-expand-lg navbar-light " style="background-color: green;">
+  <a class="navbar-brand" href="index.html">GoGreen</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="contact.html">Contact Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login.html">Login</a>
+      </li>
+      <!--<li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>-->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Search
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="locations.html">By Location</a>
+          <a class="dropdown-item" href="#">By Distance</a>
+          <a class="dropdown-item" href="#">By Favorites</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+        <div class="container" style="margin-top: 120px;">
+            <div class="content">
+                
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+
+<h2 data-localize="ocm.general.browsePOI">Browse Charging Locations</h2>
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="well well-sm">
+            
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<form action="/site/poi" method="post">    <div class="form-horizontal">
+        <input type="hidden" name="CountryIDs" value="106" />
+        <input type="hidden" name="CountryIDs" value="106" />
+
+        <div class="form-group">
+            <label class="control-label col-md-4" for="search-autocomplete">Place Search</label>
+            <div class="col-md-8">
+
+                <input type="text" class="form-control" autocomplete="off" id="search-autocomplete" name="noautocomplete" placeholder="Place name or Post/Zip Code" data-toggle="tooltip" title="Enter the place name or part of the address to search for locations near a particular place" />
+                <span id="place-name"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-4" for="search-location">Latitude, Longitude (optional)</label>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="search-location" name="searchlocation" placeholder="Optional Latitude, Longitude - or an OCM Ref ID" data-toggle="tooltip" title="Enter the location to search around" />
+                    <a class="input-group-addon btn btn-success btn-sm" title="Search Near Me" id="search-nearme" href="#"><i class="fa fa-crosshairs fa-2x"></i></a>
+                </div>
+               
+            </div>
+        </div>
+        
+        <div class="form-group">
+
+            <label class="control-label col-md-4" data-localize="ocm.search.distance">Distance</label>
+
+            <div class="col-md-4">
+                <select id="distance" name="distance" class="form-control">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="40">40</option>
+                    <option value="60">60</option>
+                    <option value="100" selected="selected">100</option>
+                    <option value="250">250</option>
+                    <option value="500">500</option>
+                    <option value="2000">2000</option>
+                    <option value="10000">10000</option>
+                    <option value="20000">20000</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select id="distanceunit" name="distanceunit" class="form-control">
+                    <option value="miles">Miles</option>
+                    <option value="km">km</option>
+                </select>
+            </div>
+        </div>
+
+        <div id="advanced" class="hidden-xs hidden-sm">
+
+            <div class="form-group">
+
+                <label class="control-label col-md-4" for="locationtitle" data-localize="ocm.details.location.title">Title</label>
+
+                <div class="col-md-8">
+                    <input type="text" class="form-control" name="locationtitle" placeholder="Title of place or business" data-toggle="tooltip" title="You can optionally search location titles for a business name etc. " />
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label class="control-label col-md-4" data-localize="ocm.search.chargingLevels">Level</label>
+
+                <div class="col-md-8">
+                    <select class="form-control" id="levelids" name="levelids"><option selected="selected" value="-1">(None Selected)</option>
+<option value="1">Level 1 : Low (Under 2kW)</option>
+<option value="2">Level 2 : Medium (Over 2kW)</option>
+<option value="3">Level 3:  High (Over 40kW)</option>
+</select>
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label class="control-label col-md-4" data-localize="ocm.search.connectionTypes">Connection Type</label>
+
+                <div class="col-md-8">
+                    <select class="form-control" id="connectiontypeids" name="connectiontypeids"><option selected="selected" value="-1">(None Selected)</option>
+<option value="7">Avcon Connector</option>
+<option value="4">Blue Commando (2P&#x2B;E)</option>
+<option value="3">BS1363 3 Pin 13 Amp</option>
+<option value="32">CCS (Type 1)</option>
+<option value="33">CCS (Type 2)</option>
+<option value="16">CEE 3 Pin</option>
+<option value="17">CEE 5 Pin</option>
+<option value="28">CEE 7/4 - Schuko - Type F</option>
+<option value="23">CEE 7/5</option>
+<option value="18">CEE&#x2B; 7 Pin</option>
+<option value="2">CHAdeMO</option>
+<option value="13">Europlug 2-Pin (CEE 7/16)</option>
+<option value="1038">GB-T AC - GB/T 20234.2 (Socket)</option>
+<option value="1039">GB-T AC - GB/T 20234.2 (Tethered Cable)</option>
+<option value="1040">GB-T DC - GB/T 20234.3</option>
+<option value="34">IEC 60309 3-pin</option>
+<option value="35">IEC 60309 5-pin</option>
+<option value="5">LP Inductive</option>
+<option value="10">NEMA 14-30</option>
+<option value="11">NEMA 14-50</option>
+<option value="22">NEMA 5-15R</option>
+<option value="9">NEMA 5-20R</option>
+<option value="15">NEMA 6-15</option>
+<option value="14">NEMA 6-20</option>
+<option value="36">SCAME Type 3A (Low Power)</option>
+<option value="26">SCAME Type 3C (Schneider-Legrand)</option>
+<option value="6">SP Inductive</option>
+<option value="1037">T13 - SEC1011 ( Swiss domestic 3-pin ) - Type J</option>
+<option value="30">Tesla (Model S/X)</option>
+<option value="8">Tesla (Roadster)</option>
+<option value="31">Tesla Battery Swap</option>
+<option value="27">Tesla Supercharger</option>
+<option value="1041">Three Phase (AS/NZ 3123)</option>
+<option value="1">Type 1 (J1772)</option>
+<option value="25">Type 2 (Socket Only)</option>
+<option value="1036">Type 2 (Tethered Connector) </option>
+<option value="29">Type I (AS 3112)</option>
+<option value="0">Unknown</option>
+<option value="24">Wireless Charging</option>
+<option value="21">XLR Plug (4 pin)</option>
+</select>
+                </div>
+            </div>
+            <div class="form-group">
+
+                <label class="control-label col-md-4" data-localize="ocm.search.usageTypes">Usage</label>
+
+                <div class="col-md-8">
+                    <select class="form-control" id="usagetypeids" name="usagetypeids"><option selected="selected" value="-1">(None Selected)</option>
+<option value="0">(Unknown)</option>
+<option value="6">Private - For Staff, Visitors or Customers</option>
+<option value="2">Private - Restricted Access</option>
+<option value="3">Privately Owned - Notice Required</option>
+<option value="1">Public</option>
+<option value="4">Public - Membership Required</option>
+<option value="7">Public - Notice Required</option>
+<option value="5">Public - Pay At Location</option>
+</select>
+                </div>
+            </div>
+          
+            <div class="form-group">
+
+                <label class="control-label col-md-4" data-localize="ocm.search.operationalStatusTypes">Status Type</label>
+
+                <div class="col-md-8">
+                    <select class="form-control" id="statustypeids" name="statustypeids"><option selected="selected" value="-1">(None Selected)</option>
+<option value="0">Unknown</option>
+<option value="30">Temporarily Unavailable</option>
+<option value="50">Operational</option>
+<option value="75">Partly Operational (Mixed)</option>
+<option value="100">Not Operational</option>
+<option value="150">Planned For Future Date</option>
+<option value="200">Removed (Decommissioned)</option>
+</select>
+                </div>
+            </div>
+          
+        <div class="form-group">
+            <div class="col-sm-7">
+
+                <input type="submit" value="Search" class="btn btn-primary" />
+               
+            </div>
+        </div>
+    </div>
+ </div>   
+<input data-val="true" data-val-required="The ShowAdvancedOptions field is required." id="ShowAdvancedOptions" name="ShowAdvancedOptions" type="hidden" value="False" /><input name="__RequestVerificationToken" type="hidden" value="CfDJ8Efg321J5vFNsnylmiS4eQRssovq7ejNlAxjH_vBCP2BrU9mA6FaW7oXMjDiN3s4M6BBkYSeG5gh56KnR8Fbfvra3roEbZl9vMvQy_KG6fmlKm3U1_0cPffrGkQi2X3RDoECPlpcQ8ChW63Y3UmWBc8" /></form><script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.0/mapbox-gl.js'></script>
+<script>
+    $(document).ready(function () {
+
+        $("#search-nearme").on("click", function () {
+            $("#place-name").html("");
+            getUserLocation();
+        });
+
+        $("#search-autocomplete").autocomplete({
+            source: function (request, response) {
+
+                var apiUrl = "https://api.mapbox.com/geocoding/v5/mapbox.places/"+request.term+".json?access_token=pk.eyJ1Ijoid2VicHJvZnVzaW9uIiwiYSI6ImNqdWtrMWRxYzFyZWszeW9hMXk1OG04d2IifQ.0CUBflERxXV6eiX7dVqz6w";
+
+                $.ajax({
+                    url: apiUrl,
+                    dataType: "json",
+                    success: function (data) {
+                        response(data.features);
+                    }
+                });
+            },
+            minLength: 3,
+            select: function (event, ui) {
+                $("#search-location").val(ui.item.center[1] + "," + ui.item.center[0]);
+
+                $("#place-name").html("Searching Near: "+ ui.item.place_name);
+            }
+        }) 
+        .autocomplete("instance")._renderItem = function (ul, item) {
+            return $("<li>")
+                .append("<div>" + item.place_name + "</div>")
+                .appendTo(ul);
+        };
+
+    });
+
+    function geocoderResults(results) {
+
+    }
+    function getUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(gotUserLocation);
+        } else {
+            alert("Sorry, your browser cannot supply your location information.");
+        }
+    }
+
+    function gotUserLocation(pos) {
+        $("#search-location").val(pos.coords.latitude + "," + pos.coords.longitude);
+    }
+
+    function searchPlaceName() {
+        var keywordForSearch = $("#search-location").val();
+        let searchService = new mapkit.Search({ getUsersLocation: true });
+
+        searchService.search(keywordForSearch, (error, data) => {
+            this.searchInProgress = false;
+            this.placeSearchActive = true;
+
+            if (error) {
+                // Handle search error
+                return;
+            }
+
+            this.placeList = [];
+            data.places.map((place) => {
+
+                let placeResult = {};
+
+                placeResult.Title = place.name;
+                //placeResult.ReferenceID = (<any>place).place_id;
+                placeResult.Address = place.formattedAddress;
+                placeResult.Type = "place";
+                placeResult.Location = { lat: place.coordinate.latitude, lng: place.coordinate.longitude };
+
+                this.placeList.push(placeResult);
+            });
+
+            if (this.placeList.length > 0) {
+                var place = this.placeList[0];
+                $("#search-location").val(place.Location.lat + "," + place.Location.lng);
+            }
+        });
+    }
+</script>
+        </div>
+
+    </div>
+    <div class="col-md-6">
+
+        
+<small>
+        There are 18 matching results
+</small>
+<div class="results-list">
+        <h3>
+            <a href="/site/poi/details/129323">
+
+                Kailash Bhavan
+                <div class="pull-right">
+                    &nbsp;
+                        <i class="fa fa-camera"></i> 1                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Kailash Bhavan
+</div>
+
+<div class="display-field">
+    Amritapuri
+</div>
+
+<div class="display-field">
+    Clappana
+</div>
+
+<div class="display-field">
+    Kerala
+</div>
+
+<div class="display-field">
+    690525
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/129323">View</a>
+            </div>
+            <div class="col-sm-6">
+Privately Owned - Notice Required                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> CEE 3 Pin
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/107668">
+
+                AtherGrid Go Native Cafe
+                <div class="pull-right">
+                        <i class="fa fa-comment-o"></i> 1                    &nbsp;
+                        <i class="fa fa-camera"></i> 2                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Go Native Cafe
+</div>
+
+<div class="display-field">
+    Jayanagar
+</div>
+
+<div class="display-field">
+    Bangalore
+</div>
+
+<div class="display-field">
+    KA
+</div>
+
+<div class="display-field">
+    560041
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/107668">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 1 : Low (Under 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103746">
+
+                BESCOM Head Office
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    K R Subway
+</div>
+
+<div class="display-field">
+    Sampangiram Nagar Ward
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    560053
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103746">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 3:  High (Over 40kW)                        <br /><span class="fa fa-link"></span> CHAdeMO
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103616">
+
+                Ather Space
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    100 Feet Road(S K Karim Khan Road)
+</div>
+
+<div class="display-field">
+    Hoysala Nagar Ward
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    570008
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103616">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103615">
+
+                Ather Grid Point - Herbs and Spices
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Whitefield Main Road
+</div>
+
+<div class="display-field">
+    Hagadur
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    560066
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103615">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103614">
+
+                Ather Grid Point - 6000 Miles to Isle of Man
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Kasturba Road
+</div>
+
+<div class="display-field">
+    Sampangiram Nagar Ward
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    560053
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103614">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103613">
+
+                Ather Grid Point - Sunny Side Bistro
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Wheeler Road Extension
+</div>
+
+<div class="display-field">
+    Maruthi Seva Nagar
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    560084
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103613">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103612">
+
+                Ather Grid Point - Patel&#x27;s Inn
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Thimmiah Gardens Streets
+</div>
+
+<div class="display-field">
+    Jayachamarajendra Nagar Ward
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    560024
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103612">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103611">
+
+                Ather Grid Point - Chapter One
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    New BEL Road
+</div>
+
+<div class="display-field">
+    Aramane Nagara Ward
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    560094
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103611">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103610">
+
+                Ather Grid Point - Royal Airawat Residency
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Bangalore-Mysore Road
+</div>
+
+<div class="display-field">
+    Kengeri
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    560059
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103610">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103609">
+
+                Ather Grid Point - Caf Eleven
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Outer Ring Road
+</div>
+
+<div class="display-field">
+    Chikkalsandra Ward
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    560085
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103609">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103607">
+
+                Ather Grid Point - Fab Cafe
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Kenchenahalli Main Road
+</div>
+
+<div class="display-field">
+    Rajarajeshwari Nagar
+</div>
+
+<div class="display-field">
+    Bengaluru
+</div>
+
+<div class="display-field">
+    Bangalore Urban
+</div>
+
+<div class="display-field">
+    560098
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103607">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103606">
+
+                Ather Grid Point - Moto Store &amp; Cafe
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    38/4, Kensington Rd, Sindhi Colony, Pulikeshi Nagar
+</div>
+
+<div class="display-field">
+    
+</div>
+
+<div class="display-field">
+    Bangalore
+</div>
+
+<div class="display-field">
+    KARNATAKA
+</div>
+
+<div class="display-field">
+    560042
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103606">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103604">
+
+                International Tech Park, Bangalore
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Whitefield Road, Pattandur Agrahara, Whitefield
+</div>
+
+<div class="display-field">
+    
+</div>
+
+<div class="display-field">
+    Bangalore
+</div>
+
+<div class="display-field">
+    KARNATAKA
+</div>
+
+<div class="display-field">
+    560066
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103604">View</a>
+            </div>
+            <div class="col-sm-6">
+Private - For Staff, Visitors or Customers                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/103603">
+
+                Ather Grid Point - Ascendas Park square mall
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    40, ITPL Main Rd, Pattandur Agrahara,
+</div>
+
+<div class="display-field">
+    
+</div>
+
+<div class="display-field">
+    Bangalore
+</div>
+
+<div class="display-field">
+    KARNATAKA
+</div>
+
+<div class="display-field">
+    560066
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/103603">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Unknown
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/96047">
+
+                Tellus Power 
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Gamut De Lousa 
+</div>
+
+<div class="display-field">
+    Banjara Hills
+</div>
+
+<div class="display-field">
+    Hyderabad
+</div>
+
+<div class="display-field">
+    Telangana
+</div>
+
+<div class="display-field">
+    500034
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/96047">View</a>
+            </div>
+            <div class="col-sm-6">
+Private - For Staff, Visitors or Customers                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Type 1 (J1772)
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/92772">
+
+                Tata Power Receiving Station
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    3, Vikhroli Village Road
+</div>
+
+<div class="display-field">
+    Vikhroli
+</div>
+
+<div class="display-field">
+    Mumbai
+</div>
+
+<div class="display-field">
+    
+</div>
+
+<div class="display-field">
+    400077
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/92772">View</a>
+            </div>
+            <div class="col-sm-6">
+Public                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> Type 1 (J1772)
+            </div>
+
+        </div>
+        <h3>
+            <a href="/site/poi/details/92771">
+
+                Ola Charging Point
+                <div class="pull-right">
+                    &nbsp;
+                </div>
+
+
+            </a>
+        </h3>
+        <div class="result row">
+
+
+            <div class="col-sm-6">
+                
+<div class="display-field">
+    Wardha Road
+</div>
+
+<div class="display-field">
+    Dhantoli
+</div>
+
+<div class="display-field">
+    Nagpur
+</div>
+
+<div class="display-field">
+    Maharashtra
+</div>
+
+<div class="display-field">
+    440001
+</div>
+
+<div class="display-field">
+    India
+</div>
+
+                <a href="/site/poi/details/92771">View</a>
+            </div>
+            <div class="col-sm-6">
+Private - For Staff, Visitors or Customers                    <br />
+                        <span>Operational</span>
+
+                        <br /><span class="fa fa-bolt"></span> Level 2 : Medium (Over 2kW)                        <br /><span class="fa fa-link"></span> CHAdeMO
+            </div>
+
+        </div>
+</div>
+
+
+
+    </div>
+
+</div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <script src="/site/js/analytics.js"></script>
+
+
+</body>
+</html>
