@@ -30,6 +30,14 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+<style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 600px;
+      }
+      
+      </style>  
 <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
 <script>
         window.addEventListener("load", function () {
@@ -58,49 +66,69 @@
             document.getElementById("map-loading").style.display = "none";
         }
     </script>
+  
 </head>
 
 <body>
 
     <!-- New Header -->
-
-    <div class="header">
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: green;">
+  <a class="navbar-brand" href="index.html">GoGreen</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="contact.html">Contact Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="login.html">Login</a>
+      </li>
+      <!--<li class="nav-item">
+        <a class="nav-link" href="#">Pricing</a>
+      </li>-->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Search
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="locations.html">By Location</a>
+          <a class="dropdown-item" href="#">By Distance</a>
+          <a class="dropdown-item" href="#">By Favorites</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+   <!-- <div class="header">
         <div class="title">
             <h1>GoGreen</h1>
         </div>
 
-    </div>
+    </div>-->
 
-      
-<form action="/action_page.php">
-Enter Code: <input type="text" name="Code for the power station" ><br>
-<input type="submit" value="Submit">
-</form>
-
+<br>
+<br>     
 
     
-
-
-        <div class="col-md-12">
-            <h2>Will the environment benefit from driving an electric car? </h2>
-
-            <p>See how your state generate its electricity (green - renewable, brown - conventional) and what that means for the CO2 equivalent of electric vehicles. (CO2 output per vehicle annual data to inform the choice for selection.</p>
-        </div>
-
-
-        <div class="col-md-12">
-            <div class="row">
-
-                <div class="col-md-6">
-
-                    <h2>Fuel Economy of Electric Cars</h2>
-
-                </div>
-                <div class="col-md-6">
+<br>
+<div class="jumbotron">
+  <h1 class="display-4">EVCA</h1>
+  <p class="lead">Will the environment benefit from driving an electric car? 
+  Surely yes, so here is an electric vehicle charging assistant to help you in the transition to this new era</p>
+  <hr class="my-4">
+   
+  <p>See how your state generate its electricity (green - renewable, brown - conventional) and what that means for the CO2 equivalent of electric vehicles. (CO2 output per vehicle annual data to inform the choice for selection.</p>
+  <p class="lead">
+    <div class="col-md-4">
 
                     <form class="form-inline">
                         <div class="form-group">
-                            <label for="ranking-type" id="chart_text">Chart Data:</label>
+                            <label for="ranking-type" id="chart_text">Chart Data: </label>
                             <select class="form-control" id="selected-variable" onchange="createVisTree(nested_data_tree)">
                                 <option value="Electric">Fuel Economy for Electric Cars</option>
                                 <option value="Hybrid Electric">Fuel Economy for Hybrid Electric Cars</option>
@@ -110,35 +138,42 @@ Enter Code: <input type="text" name="Code for the power station" ><br>
                     </form>
                 </div>
 
-            </div>
-        </div>
+  
+  </p>
+</div>
+
+       
 
 
-        <div class="container-fluid">
-            <div class="col-md-6">
-                <div class="visArea" id="myTreemap"></div>
-            </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="visArea" id="car_info"></div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="visArea" id="treediagram"></div>
-                </div>
-            </div>
-        </div>
+
+
+               
+                
+            
+
+      
 
         <div class="col-md-12">
             <h2>Find out the nearby power stations</h2>
         </div>
 
-        <div class="row">
+        <div class="row" >
           <iframe src="https://map.openchargemap.io/?mode=embedded" allow="geolocation" frameborder="0" width="100%" height="500px"></iframe>
+          <!--<iframe width="1200" height="500" frameborder="0" style="border:0"
+            src="https://www.google.com/maps/embed/v1/search?q=mandi&key=AIzaSyAd6GjYMOj2XyuJMEhZDbogS-AfZm9u0Yw" allowfullscreen></iframe>-->
+        <!--<div id="map">
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+    </script>
+  </div>-->
 
-
-        </div>
+        
 
     </div>
 <footer class="footer mt-auto py-3">
@@ -148,7 +183,7 @@ Enter Code: <input type="text" name="Code for the power station" ><br>
 <a href="https://github.com/openchargemap/" title="Get involved on Github"><i class="fa fa-github"></i></a>
 <a href="/site/about/contact" title="Contact Us"><i class="fa fa-comments"></i></a>
 <br />
-<span data-localize="ocm.infoText.shortProjectSummary">EVCA is a non-commercial, non-profit service hosted and supported by a community of businesses, charities, developers and interested parties around the world.</span>
+<span data-localize="ocm.infoText.shortProjectSummary">EVCA is a non-commercial, non-profit service hosted and supported by a group of college girls to help people all over India.</span>
 </div>
 </footer>
     <!-- Load JS libraries -->
@@ -165,6 +200,9 @@ Enter Code: <input type="text" name="Code for the power station" ><br>
     <script src="js/treediagram.js"></script>
     <script src="js/salesNumbers.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAd6GjYMOj2XyuJMEhZDbogS-AfZm9u0Yw&callback=initMap"
+    async defer></script>
+
 
 
 </body>
